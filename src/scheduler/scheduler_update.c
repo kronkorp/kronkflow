@@ -26,7 +26,7 @@ size_t prScheduler_tick(prScheduler *sch, void *context)
         if (r && ctask.interval > 0) {
             ctask.target = ctask.interval;
             prScheduler_addTask(sch, ctask);
-        } else {
+        } else if (ctask.data.clearer) {
             ctask.data.clearer(ctask.data.data);
         }
     }
