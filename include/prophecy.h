@@ -75,4 +75,6 @@ prTask prTask_create(prHandler handler, prTaskData data, tick delay, tick interv
 
 size_t prScheduler_tick(prScheduler *sch, void *context);
 
+tick prScheduler_currentTick(const prScheduler *sch);
+
 #endif /* PROPHECY_H */
