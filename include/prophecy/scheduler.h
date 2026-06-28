@@ -58,10 +58,10 @@ PR_API void prScheduler_destroy(prScheduler *sch);
  * @param opt       The task options (handler, data, clearer)
  * @param target    In how many ticks the task is gonna be executed
  * @param interval  If >0, the task will be reprogramming every <interval> ticks
- * @param id        The id of the task added (>1), 0 if failed
+ * @return          The id of the task added (>1), 0 if failed
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API size_t prScheduler_addTask(prScheduler *sch, prTaskOpt opt, tick target, tick interval);
+PR_API prTaskID prScheduler_addTask(prScheduler *sch, prTaskOpt opt, prTick delay, prTick interval);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -86,7 +86,7 @@ PR_API size_t prScheduler_tick(prScheduler *sch, void *context);
  * @return     The current tick
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API tick prScheduler_currentTick(const prScheduler *sch);
+PR_API prTick prScheduler_currentTick(const prScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_SCHEDULER_H */

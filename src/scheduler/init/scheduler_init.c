@@ -4,10 +4,15 @@
 ** File description:
 ** Init the scheduler
 */
-#include "prophecy.h"
+#include "prophecy/scheduler.h"
+#include "../../task/task.h"
+#include "../scheduler.h"
 #include <stdlib.h>
 
-int prScheduler_init(prScheduler *sch, size_t size)
+int prScheduler_init(
+    prScheduler *sch,
+    size_t size
+)
 {
     if (!size) {
         return -1;

@@ -7,6 +7,7 @@
 #ifndef PROPHECY_MACROS_TYPES_H
     #define PROPHECY_MACROS_TYPES_H
     #include <stdbool.h>
+    #include <stddef.h>
     #include <stdint.h>
 
     typedef int prBool;
@@ -15,6 +16,7 @@
 
     typedef prBool (*prHandler)(void *, void *);
     typedef void (*prClearer)(void *);
-    typedef uint64_t tick;
+    typedef uint64_t prTick;
+    typedef size_t   prTaskID;
 
 #endif /* PROPHECY_MACROS_TYPES_H */

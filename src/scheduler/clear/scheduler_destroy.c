@@ -4,10 +4,14 @@
 ** File description:
 ** Destroy the scheduler
 */
-#include "prophecy.h"
+#include "../scheduler.h"
+#include "prophecy/macros/optimization.h"
 #include <stdlib.h>
 
-void prScheduler_destroy(prScheduler *sch)
+PR_API
+void prScheduler_destroy(
+    prScheduler *sch
+)
 {
     if (!sch) {
         return;

@@ -21,7 +21,7 @@ typedef struct prophecy_scheduler_s {
     prTask  *tasks;  //!< The raw array of tasks
     size_t   size;   //!< The size of tasks raw array
     size_t   count;  //!< The number of tasks pushed
-    tick     tick;   //!< The current tick (please tick scheduler at each loop)
+    prTick   tick;   //!< The current tick (please tick scheduler at each loop)
 
 } prScheduler;
 ///////////////////////////////////////////////////////////////////////////////

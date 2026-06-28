@@ -1,14 +1,17 @@
-#include "prophecy/macros/types.h"
-#include <stddef.h>
+/*
+** FREE PROJECT, 2026
+** PROPHECY
+** File description:
+** Definitions of structs and methods for prophecy lib
+*/
+#ifndef PROPHECY_TASK_IMPL_H
+    #define PROPHECY_TASK_IMPL_H
+    #include "prophecy/macros/types.h"
+    #include "prophecy/task.h"
+    #include <stddef.h>
 
-typedef struct prophecy_task_data_s {
 
-    void      *data;
-    prClearer  clearer;
 
-} prTaskData;
-
-// TODO: Add a cleanup function ptr.
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * @struct prophecy_task_s
@@ -20,12 +23,12 @@ typedef struct prophecy_task_s {
 
     size_t     id;        //!< The id of the tasks
     prHandler  handler;   //!< The handler (callback)
-    prTaskData data;      //!< The task data
-    tick       interval;  //!< The interval (0 if ponctual, > 0 else)
-    tick       target;     //!< The tick remainings.
+    void*      data;      //!< The task data
+    prClearer  clearer;   //!< The data clearer
+    prTick     interval;  //!< The interval (0 if ponctual, > 0 else)
+    prTick     target;    //!< The tick remainings.
 
 } prTask;
 ///////////////////////////////////////////////////////////////////////////////
 
-prTask prTask_create(prHandler handler, prTaskData data, tick delay, tick interval);
-prTaskData prTask_data(void *data, prClearer clearer);
+#endif /* PROPHECY_TASK_IMPL_H */
