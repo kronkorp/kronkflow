@@ -7,7 +7,6 @@ Prophecy is a lightweight, efficient task scheduler library for C applications. 
 - **Efficient Scheduling**: Uses a min-heap to keep the next upcoming task at the top.
 - **One-time & Periodic Tasks**: Support for both punctual and recurring tasks.
 - **Lightweight**: Zero-dependency library, easy to integrate.
-- **Multiple Build Systems**: Support for both CMake and Makefile.
 
 ## Installation
 
@@ -15,18 +14,16 @@ Prophecy is a lightweight, efficient task scheduler library for C applications. 
 
 ```bash
 mkdir build
-cd build
+cd build/
 cmake ..
 make
 ```
 
-### Using Makefile
+This will generate `libprophecy.a` and `libprophecy.so`. You can now install with
 
 ```bash
-make
+sudo make install
 ```
-
-This will generate `libprophecy.a`.
 
 ## Quick Start
 
@@ -49,10 +46,10 @@ int main(void)
     prScheduler *sch = prScheduler_create(512);
 
     // Add a periodic task (runs in 2 ticks, then every 5 ticks)
-    prScheduler_addTask(sch, prTask_create(&my_handler, (void *)1, 2, 5));
+    prScheduler_addTask(sch, prTask_opt(&my_handler, (void *)1, NULL) 2, 5);
 
     // Add a punctual task (runs once in 10 ticks)
-    prScheduler_addTask(sch, prTask_create(&my_handler, (void *)3, 10, 0));
+    prScheduler_addTask(sch, prTask_opt(&my_handler, (void *)3, NULL), 10, 0);
 
     // Main loop
     while (1) {
@@ -73,8 +70,8 @@ int main(void)
 - `prScheduler_tick(prScheduler *sch, void *context)`: Advance the scheduler by one tick and execute ready tasks.
 
 ### Task Management
-- `prTask_create(prHandler handler, void *data, tick delay, tick interval)`: Build a task structure.
-- `prScheduler_addTask(prScheduler *sch, prTask task)`: Register a task in the scheduler.
+- `prTask_opt(prHandler handler, void *data, prClearer clearer)`: Build a task opt structure.
+- `prScheduler_addTask(prScheduler *sch, prTask task, prTick delay, prTick interval)`: Register a task in the scheduler.
 
 ## License
 
