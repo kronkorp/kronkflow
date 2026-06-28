@@ -4,12 +4,17 @@
 ** File description:
 ** add a task to the scheduler
 */
-#include "prophecy.h"
+#include "prophecy/macros/optimization.h"
+#include "prophecy/macros/types.h"
+#include "scheduler.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include "../minheap/minheap.h"
+#include "prophecy/task.h"
 
-static int __prScheduler_ensureCapacity(prScheduler *sch)
+static int __prScheduler_ensureCapacity(
+    prScheduler *sch
+)
 {
     prTask *old = sch->tasks;
     size_t newSize = (sch->size == 0) ? 16 : sch->size * 2;
@@ -23,7 +28,13 @@ static int __prScheduler_ensureCapacity(prScheduler *sch)
     return 0;
 }
 
-size_t prScheduler_addTask(prScheduler *sch, prTask task)
+PR_API
+size_t prScheduler_addTask(
+    prScheduler *sch,
+    prTaskOpt taskOptions,
+    prTick target,
+    prTick interval
+)
 {
     static size_t _id = 1;
 
@@ -35,9 +46,9 @@ size_t prScheduler_addTask(prScheduler *sch, prTask task)
             return 0;
         }
     }
-    sch->tasks[sch->count] = task; 
+    sch->tasks[sch->count] = prTask_create(&taskOptions, target, interval); 
     sch->tasks[sch->count].id = _id;
-    sch->tasks[sch->count].target = sch->tick + task.target;
+    sch->tasks[sch->count].target = sch->tick + target;
     prMinHeap_add(sch, sch->count);
     ++sch->count;
     return _id++;

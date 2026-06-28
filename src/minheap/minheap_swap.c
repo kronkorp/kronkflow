@@ -5,8 +5,12 @@
 ** Swap two minheap tasks.
 */
 #include "minheap.h"
+#include "../scheduler/scheduler.h"
 
-void prMinHeap_swap(prTask *task1, prTask *task2)
+void prMinHeap_swap(
+    prTask *task1,
+    prTask *task2
+)
 {
     prTask tmp = *task1;
 

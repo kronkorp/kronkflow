@@ -4,11 +4,15 @@
 ** File description:
 ** Create a scheduler
 */
-#include "prophecy.h"
+#include "../scheduler.h"
+#include "prophecy/macros/optimization.h"
 #include <stdlib.h>
 #include <stddef.h>
 
-prScheduler *prScheduler_create(size_t size)
+PR_API
+prScheduler *prScheduler_create(
+    size_t size
+)
 {
     prScheduler *sch = calloc(1, sizeof(prScheduler));
 

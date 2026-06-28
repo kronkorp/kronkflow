@@ -4,11 +4,19 @@
 ** File description:
 ** Update the scheduler
 */
-#include "prophecy.h"
+#include "prophecy/macros/optimization.h"
+#include "prophecy/task.h"
+#include "scheduler.h"
 #include <stddef.h>
+#include "../task/task.h"
 #include "../minheap/minheap.h"
+#include "prophecy/scheduler.h"
 
-size_t prScheduler_tick(prScheduler *sch, void *context)
+PR_API
+size_t prScheduler_tick(
+    prScheduler *sch,
+    void *context
+)
 {
     size_t done = 0;
     prTask ctask;
@@ -21,13 +29,13 @@ size_t prScheduler_tick(prScheduler *sch, void *context)
     while (sch->count > 0 && sch->tasks[0].target <= sch->tick) {
         ctask = sch->tasks[0];
         prMinHeap_remove(sch, 0);
-        r = ctask.handler(context, ctask.data.data);
+        r = ctask.handler(context, ctask.data);
         done++;
         if (r && ctask.interval > 0) {
             ctask.target = ctask.interval;
-            prScheduler_addTask(sch, ctask);
-        } else if (ctask.data.clearer) {
-            ctask.data.clearer(ctask.data.data);
+            prScheduler_addTask(sch, (prTaskOpt){ctask.handler, ctask.data, ctask.clearer}, ctask.interval, ctask.interval);
+        } else if (ctask.clearer) {
+            ctask.clearer(ctask.data);
         }
     }
     return done;
