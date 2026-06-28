@@ -4,9 +4,14 @@
 ** File description:
 ** Get scheduler currentt tick
 */
-#include "prophecy.h"
+#include "prophecy/macros/optimization.h"
+#include "prophecy/scheduler.h"
+#include "scheduler.h"
 
-tick prScheduler_currentTick(const prScheduler *sch)
+PR_API
+prTick prScheduler_currentTick(
+    const prScheduler *sch
+)
 {
     if (!sch) {
         return 0;

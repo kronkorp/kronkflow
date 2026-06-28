@@ -4,11 +4,14 @@
 ** File description:
 ** Remove a task from the minheap
 */
-#include "prophecy.h"
+#include "../scheduler/scheduler.h"
 #include "minheap.h"
 #include <stddef.h>
 
-void prMinHeap_remove(prScheduler *sch, size_t idx)
+void prMinHeap_remove(
+    prScheduler *sch,
+    size_t idx
+)
 {
     size_t left, right, smallest;
 

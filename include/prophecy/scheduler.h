@@ -1,0 +1,92 @@
+/*
+** FREE PROJECT, 2026
+** PROPHECY
+** File description:
+** Definitions of structs and methods for prophecy lib
+*/
+#ifndef PROPHECY_SCHEDULER_H
+    #define PROPHECY_SCHEDULER_H
+    #include "prophecy/macros/types.h"
+    #include "prophecy/macros/optimization.h"
+    #include "prophecy/task.h"
+    #include <stdint.h>
+    #include <stddef.h>
+    #include <stdbool.h>
+    /*
+    ** This task scheduler will implemente a min - heap binary tree,
+    ** in order to optimize ressources and checking.
+    ** https://www.geeksforgeeks.org/c/c-program-to-implement-min-heap/
+    */
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Forward declaration of prScheduler type
+ */
+///////////////////////////////////////////////////////////////////////////////
+typedef struct prophecy_scheduler_s prScheduler;
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Create a task scheduler
+ *
+ * @param size  Starting size of tasks scheduler
+ * @return      Returns newly allocated prScheduler, or NULL on error
+ */
+///////////////////////////////////////////////////////////////////////////////
+PR_API prScheduler *prScheduler_create(size_t size);
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Destroy the task scheduler
+ *
+ * @param sch  The scheduler to destroy
+ */
+///////////////////////////////////////////////////////////////////////////////
+PR_API void prScheduler_destroy(prScheduler *sch);
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Add a task to the scheduler
+ *
+ * @param sch       The scheduler to add a task
+ * @param opt       The task options (handler, data, clearer)
+ * @param target    In how many ticks the task is gonna be executed
+ * @param interval  If >0, the task will be reprogramming every <interval> ticks
+ * @return          The id of the task added (>1), 0 if failed
+ */
+///////////////////////////////////////////////////////////////////////////////
+PR_API prTaskID prScheduler_addTask(prScheduler *sch, prTaskOpt opt, prTick delay, prTick interval);
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Tick the scheduler
+ *
+ * @param sch      The scheduler to tick
+ * @param context  The context to give to the task that are ready to exectute
+ * @return         Returns the number of tasks executed this tick
+ */
+///////////////////////////////////////////////////////////////////////////////
+PR_API size_t prScheduler_tick(prScheduler *sch, void *context);
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Get the current tick of the scheduler
+ *
+ * @param sch  The scheduler to get tick of
+ * @return     The current tick
+ */
+///////////////////////////////////////////////////////////////////////////////
+PR_API prTick prScheduler_currentTick(const prScheduler *sch);
+///////////////////////////////////////////////////////////////////////////////
+
+#endif /* PROPHECY_SCHEDULER_H */

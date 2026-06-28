@@ -4,19 +4,25 @@
 ** File description:
 ** Create a task from parameters
 */
-#include "prophecy.h"
+#include "prophecy/macros/optimization.h"
+#include "prophecy/macros/types.h"
+#include "prophecy/task.h"
+#include "task.h"
 
-inline prTask prTask_create(
-    prHandler handler,
-    prTaskData data,
-    tick delay,
-    tick interval
+// DEBUG: Make sure opt is not NULL
+PR_API
+inline
+prTask prTask_create(
+    prTaskOpt *opt,
+    prTick delay,
+    prTick interval
 )
 {
     return (prTask){
         .id = 0,
-        .handler = handler,
-        .data = data,
+        .handler = opt->handler,
+        .data = opt->data,
+        .clearer = opt->clearer,
         .target = delay,
         .interval = interval,
     };
