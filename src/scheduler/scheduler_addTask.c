@@ -4,12 +4,15 @@
 ** File description:
 ** add a task to the scheduler
 */
-#include "prophecy.h"
+#include "scheduler.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include "../minheap/minheap.h"
+#include "prophecy/task.h"
 
-static int __prScheduler_ensureCapacity(prScheduler *sch)
+static int __prScheduler_ensureCapacity(
+    prScheduler *sch
+)
 {
     prTask *old = sch->tasks;
     size_t newSize = (sch->size == 0) ? 16 : sch->size * 2;
@@ -23,7 +26,10 @@ static int __prScheduler_ensureCapacity(prScheduler *sch)
     return 0;
 }
 
-size_t prScheduler_addTask(prScheduler *sch, prTask task)
+size_t prScheduler_addTask(
+    prScheduler *sch,
+    prTaskOpt task
+)
 {
     static size_t _id = 1;
 
