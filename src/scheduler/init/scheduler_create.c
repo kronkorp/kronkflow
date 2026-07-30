@@ -5,21 +5,21 @@
 ** Create a scheduler
 */
 #include "../scheduler.h"
-#include "prophecy/macros/optimization.h"
+#include "kronkflow/macros/optimization.h"
 #include <stdlib.h>
 #include <stddef.h>
 
 PR_API
-prScheduler *prScheduler_create(
+kfScheduler *kfScheduler_create(
     size_t size
 )
 {
-    prScheduler *sch = calloc(1, sizeof(prScheduler));
+    kfScheduler *sch = calloc(1, sizeof(kfScheduler));
 
     if (!sch) {
         return NULL;
     }
-    if (prScheduler_init(sch, size) == -1) {
+    if (kfScheduler_init(sch, size) == -1) {
         free(sch);
         return NULL;
     }

@@ -4,19 +4,19 @@
 ** File description:
 ** Create a task opt from parameters
 */
-#include "prophecy/macros/optimization.h"
-#include "prophecy/macros/types.h"
-#include "prophecy/task.h"
+#include "kronkflow/macros/optimization.h"
+#include "kronkflow/macros/types.h"
+#include "kronkflow/task.h"
 
 PR_API
 inline
-prTaskOpt prTask_opt(
+kfTaskOpt kfTask_opt(
     prHandler handler,
     void *data,
     prClearer clearer
 )
 {
-    return (prTaskOpt){
+    return (kfTaskOpt){
         .handler = handler,
         .data = data,
         .clearer = clearer

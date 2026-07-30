@@ -18,12 +18,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 typedef struct prophecy_scheduler_s {
 
-    prTask  *tasks;  //!< The raw array of tasks
+    kfTask  *tasks;  //!< The raw array of tasks
     size_t   size;   //!< The size of tasks raw array
     size_t   count;  //!< The number of tasks pushed
     prTick   tick;   //!< The current tick (please tick scheduler at each loop)
 
-} prScheduler;
+} kfScheduler;
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -35,7 +35,7 @@ typedef struct prophecy_scheduler_s {
  * @param size  The starting size of the scheduler
  */
 ///////////////////////////////////////////////////////////////////////////////
-int prScheduler_init(prScheduler *sch, size_t size);
+int kfScheduler_init(kfScheduler *sch, size_t size);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -46,7 +46,7 @@ int prScheduler_init(prScheduler *sch, size_t size);
  * @param sch  The scheduler to clear
  */
 ///////////////////////////////////////////////////////////////////////////////
-void prScheduler_clear(prScheduler *sch);
+void kfScheduler_clear(kfScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_SCHEDULER_IMPL_H */

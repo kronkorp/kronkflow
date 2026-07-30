@@ -13,7 +13,7 @@
 */
 // DEBUG: Bubble up
 void prMinHeap_add(
-    prScheduler *sch,
+    kfScheduler *sch,
     size_t idx
 )
 {

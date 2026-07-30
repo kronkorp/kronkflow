@@ -9,7 +9,7 @@
 #include <stddef.h>
 
 void prMinHeap_remove(
-    prScheduler *sch,
+    kfScheduler *sch,
     size_t idx
 )
 {

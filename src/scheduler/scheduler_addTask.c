@@ -4,22 +4,22 @@
 ** File description:
 ** add a task to the scheduler
 */
-#include "prophecy/macros/optimization.h"
-#include "prophecy/macros/types.h"
+#include "kronkflow/macros/optimization.h"
+#include "kronkflow/macros/types.h"
 #include "scheduler.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include "../minheap/minheap.h"
-#include "prophecy/task.h"
+#include "kronkflow/task.h"
 
-static int __prScheduler_ensureCapacity(
-    prScheduler *sch
+static int __kfScheduler_ensureCapacity(
+    kfScheduler *sch
 )
 {
-    prTask *old = sch->tasks;
+    kfTask *old = sch->tasks;
     size_t newSize = (sch->size == 0) ? 16 : sch->size * 2;
 
-    sch->tasks = reallocarray(sch->tasks, newSize, sizeof(prTask));
+    sch->tasks = reallocarray(sch->tasks, newSize, sizeof(kfTask));
     if (!sch->tasks) {
         sch->tasks = old;
         return -1;
@@ -29,9 +29,9 @@ static int __prScheduler_ensureCapacity(
 }
 
 PR_API
-size_t prScheduler_addTask(
-    prScheduler *sch,
-    prTaskOpt taskOptions,
+size_t kfScheduler_addTask(
+    kfScheduler *sch,
+    kfTaskOpt taskOptions,
     prTick target,
     prTick interval
 )
@@ -42,11 +42,11 @@ size_t prScheduler_addTask(
         return 0;
     }
     if (sch->count >= sch->size) {
-        if (__prScheduler_ensureCapacity(sch) == -1) {
+        if (__kfScheduler_ensureCapacity(sch) == -1) {
             return 0;
         }
     }
-    sch->tasks[sch->count] = prTask_create(&taskOptions, target, interval); 
+    sch->tasks[sch->count] = kfTask_create(&taskOptions, target, interval); 
     sch->tasks[sch->count].id = _id;
     sch->tasks[sch->count].target = sch->tick + target;
     prMinHeap_add(sch, sch->count);

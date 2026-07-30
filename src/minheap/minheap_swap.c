@@ -8,11 +8,11 @@
 #include "../scheduler/scheduler.h"
 
 void prMinHeap_swap(
-    prTask *task1,
-    prTask *task2
+    kfTask *task1,
+    kfTask *task2
 )
 {
-    prTask tmp = *task1;
+    kfTask tmp = *task1;
 
     *task1 = *task2;
     *task2 = tmp;

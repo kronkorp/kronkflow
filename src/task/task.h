@@ -6,8 +6,8 @@
 */
 #ifndef PROPHECY_TASK_IMPL_H
     #define PROPHECY_TASK_IMPL_H
-    #include "prophecy/macros/types.h"
-    #include "prophecy/task.h"
+    #include "kronkflow/macros/types.h"
+    #include "kronkflow/task.h"
     #include <stddef.h>
 
 
@@ -28,7 +28,7 @@ typedef struct prophecy_task_s {
     prTick     interval;  //!< The interval (0 if ponctual, > 0 else)
     prTick     target;    //!< The tick remainings.
 
-} prTask;
+} kfTask;
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_TASK_IMPL_H */
