@@ -8,12 +8,12 @@
 #include "kronkflow/macros/types.h"
 #include "kronkflow/task.h"
 
-PR_API
+KF_API
 inline
 kfTaskOpt kfTask_opt(
-    prHandler handler,
+    kfHandler handler,
     void *data,
-    prClearer clearer
+    kfClearer clearer
 )
 {
     return (kfTaskOpt){

@@ -10,13 +10,13 @@
     #include <stddef.h>
     #include <stdint.h>
 
-    typedef int prBool;
-    #define knTrue  1
-    #define knFalse 0
+    typedef int kfBool;
+    #define kfTrue  1
+    #define kfFalse 0
 
-    typedef prBool (*prHandler)(void *, void *);
-    typedef void (*prClearer)(void *);
-    typedef uint64_t prTick;
+    typedef kfBool (*kfHandler)(void *, void *);
+    typedef void (*kfClearer)(void *);
+    typedef uint64_t kfTick;
     typedef size_t   kfTaskID;
 
 #endif /* PROPHECY_MACROS_TYPES_H */

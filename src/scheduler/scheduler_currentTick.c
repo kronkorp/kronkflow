@@ -8,8 +8,8 @@
 #include "kronkflow/scheduler.h"
 #include "scheduler.h"
 
-PR_API
-prTick kfScheduler_currentTick(
+KF_API
+kfTick kfScheduler_currentTick(
     const kfScheduler *sch
 )
 {
