@@ -6,9 +6,9 @@
 */
 #ifndef PROPHECY_SCHEDULER_H
     #define PROPHECY_SCHEDULER_H
-    #include "prophecy/macros/types.h"
-    #include "prophecy/macros/optimization.h"
-    #include "prophecy/task.h"
+    #include "kronkflow/macros/types.h"
+    #include "kronkflow/macros/optimization.h"
+    #include "kronkflow/task.h"
     #include <stdint.h>
     #include <stddef.h>
     #include <stdbool.h>
@@ -20,10 +20,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @brief Forward declaration of prScheduler type
+ * @brief Forward declaration of kfScheduler type
  */
 ///////////////////////////////////////////////////////////////////////////////
-typedef struct prophecy_scheduler_s prScheduler;
+typedef struct prophecy_scheduler_s kfScheduler;
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -32,10 +32,10 @@ typedef struct prophecy_scheduler_s prScheduler;
  * @brief  Create a task scheduler
  *
  * @param size  Starting size of tasks scheduler
- * @return      Returns newly allocated prScheduler, or NULL on error
+ * @return      Returns newly allocated kfScheduler, or NULL on error
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prScheduler *prScheduler_create(size_t size);
+PR_API kfScheduler *kfScheduler_create(size_t size);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -46,7 +46,7 @@ PR_API prScheduler *prScheduler_create(size_t size);
  * @param sch  The scheduler to destroy
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API void prScheduler_destroy(prScheduler *sch);
+PR_API void kfScheduler_destroy(kfScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -61,7 +61,7 @@ PR_API void prScheduler_destroy(prScheduler *sch);
  * @return          The id of the task added (>1), 0 if failed
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prTaskID prScheduler_addTask(prScheduler *sch, prTaskOpt opt, prTick delay, prTick interval);
+PR_API kfTaskID kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, prTick delay, prTick interval);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -74,7 +74,7 @@ PR_API prTaskID prScheduler_addTask(prScheduler *sch, prTaskOpt opt, prTick dela
  * @return         Returns the number of tasks executed this tick
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API size_t prScheduler_tick(prScheduler *sch, void *context);
+PR_API size_t kfScheduler_tick(kfScheduler *sch, void *context);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -86,7 +86,7 @@ PR_API size_t prScheduler_tick(prScheduler *sch, void *context);
  * @return     The current tick
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prTick prScheduler_currentTick(const prScheduler *sch);
+PR_API prTick kfScheduler_currentTick(const kfScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_SCHEDULER_H */

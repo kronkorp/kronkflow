@@ -4,20 +4,20 @@
 ** File description:
 ** Init the scheduler
 */
-#include "prophecy/scheduler.h"
+#include "kronkflow/scheduler.h"
 #include "../../task/task.h"
 #include "../scheduler.h"
 #include <stdlib.h>
 
-int prScheduler_init(
-    prScheduler *sch,
+int kfScheduler_init(
+    kfScheduler *sch,
     size_t size
 )
 {
     if (!size) {
         return -1;
     }
-    sch->tasks = calloc(size, sizeof(prTask));
+    sch->tasks = calloc(size, sizeof(kfTask));
     if (!sch->tasks) {
         return -1;
     }

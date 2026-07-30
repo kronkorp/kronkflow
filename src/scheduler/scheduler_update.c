@@ -4,22 +4,22 @@
 ** File description:
 ** Update the scheduler
 */
-#include "prophecy/macros/optimization.h"
-#include "prophecy/task.h"
+#include "kronkflow/macros/optimization.h"
+#include "kronkflow/task.h"
 #include "scheduler.h"
 #include <stddef.h>
 #include "../task/task.h"
 #include "../minheap/minheap.h"
-#include "prophecy/scheduler.h"
+#include "kronkflow/scheduler.h"
 
 PR_API
-size_t prScheduler_tick(
-    prScheduler *sch,
+size_t kfScheduler_tick(
+    kfScheduler *sch,
     void *context
 )
 {
     size_t done = 0;
-    prTask ctask;
+    kfTask ctask;
     bool r;
 
     if (!sch) {
@@ -33,7 +33,7 @@ size_t prScheduler_tick(
         done++;
         if (r && ctask.interval > 0) {
             ctask.target = ctask.interval;
-            prScheduler_addTask(sch, (prTaskOpt){ctask.handler, ctask.data, ctask.clearer}, ctask.interval, ctask.interval);
+            kfScheduler_addTask(sch, (kfTaskOpt){ctask.handler, ctask.data, ctask.clearer}, ctask.interval, ctask.interval);
         } else if (ctask.clearer) {
             ctask.clearer(ctask.data);
         }

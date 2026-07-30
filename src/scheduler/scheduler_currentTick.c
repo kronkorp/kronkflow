@@ -4,13 +4,13 @@
 ** File description:
 ** Get scheduler currentt tick
 */
-#include "prophecy/macros/optimization.h"
-#include "prophecy/scheduler.h"
+#include "kronkflow/macros/optimization.h"
+#include "kronkflow/scheduler.h"
 #include "scheduler.h"
 
 PR_API
-prTick prScheduler_currentTick(
-    const prScheduler *sch
+prTick kfScheduler_currentTick(
+    const kfScheduler *sch
 )
 {
     if (!sch) {

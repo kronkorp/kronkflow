@@ -8,8 +8,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-void prScheduler_clear(
-    prScheduler *sch
+void kfScheduler_clear(
+    kfScheduler *sch
 )
 {
     if (!sch) {

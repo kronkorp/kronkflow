@@ -6,15 +6,15 @@
 */
 #ifndef PROPHECY_TASKS_H
     #define PROPHECY_TASKS_H
-    #include "prophecy/macros/optimization.h"
-    #include "prophecy/macros/types.h"
+    #include "kronkflow/macros/optimization.h"
+    #include "kronkflow/macros/types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @brief  Forward declaration of prTask
+ * @brief  Forward declaration of kfTask
  */
 ///////////////////////////////////////////////////////////////////////////////
-typedef struct prophecy_task_s prTask;
+typedef struct prophecy_task_s kfTask;
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -31,7 +31,7 @@ typedef struct prophecy_task_opt_s {
     void*     data;      //!< The data to give to the handler
     prClearer clearer;   //!< The clearer of the data if allocated
 
-} prTaskOpt;
+} kfTaskOpt;
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -44,7 +44,7 @@ typedef struct prophecy_task_opt_s {
  * @param clearer  The clearer to clear data if allocated
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prTaskOpt prTask_opt(prHandler handler, void *data, prClearer clearer);
+PR_API kfTaskOpt kfTask_opt(prHandler handler, void *data, prClearer clearer);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -58,7 +58,7 @@ PR_API prTaskOpt prTask_opt(prHandler handler, void *data, prClearer clearer);
  * @return          Returns the new task
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prTask prTask_create(prTaskOpt *data, prTick delay, prTick interval);
+PR_API kfTask kfTask_create(kfTaskOpt *data, prTick delay, prTick interval);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_TASKS_H */

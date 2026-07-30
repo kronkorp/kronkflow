@@ -5,18 +5,18 @@
 ** Destroy the scheduler
 */
 #include "../scheduler.h"
-#include "prophecy/macros/optimization.h"
+#include "kronkflow/macros/optimization.h"
 #include <stdlib.h>
 
 PR_API
-void prScheduler_destroy(
-    prScheduler *sch
+void kfScheduler_destroy(
+    kfScheduler *sch
 )
 {
     if (!sch) {
         return;
     }
-    prScheduler_clear(sch);
+    kfScheduler_clear(sch);
     free(sch);
     return;
 }

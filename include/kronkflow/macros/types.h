@@ -17,6 +17,6 @@
     typedef prBool (*prHandler)(void *, void *);
     typedef void (*prClearer)(void *);
     typedef uint64_t prTick;
-    typedef size_t   prTaskID;
+    typedef size_t   kfTaskID;
 
 #endif /* PROPHECY_MACROS_TYPES_H */
