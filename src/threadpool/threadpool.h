@@ -35,6 +35,13 @@ typedef struct kronkflow_threadpool_s {
 } kfThreadPool;
 ///////////////////////////////////////////////////////////////////////////////
 
+typedef struct kronkflow_thread_task_s {
+
+    kfHandler handler;
+    void *data;
+
+} kfThreadTask;
+
 // TODO: Documentation
 kfThreadPool *kfThreadPool_create(ssize_t nthreads, void *ctx);
 int kfThreadPool_init(kfThreadPool *pool, size_t nthreads, void *ctx);

@@ -8,7 +8,6 @@
 #include "kronkflow/macros/types.h"
 #include "queue/queue.h"
 #include "threadpool.h"
-#include "kronkflow/threadpool.h"
 #include <bits/pthreadtypes.h>
 #include <prophecy/macros/types.h>
 #include <pthread.h>
@@ -54,8 +53,8 @@ static void *__routine(
         return NULL;
     }
     while (true) {
-        kfHandler handler;
-        void *d;
+        kfThreadTask *task;
+        // void *d;
         pthread_mutex_lock(&pool->mutex);
         while (!pool->stop && queue_empty(&pool->queue)) {
             pthread_cond_wait(&pool->cond, &pool->mutex);
@@ -64,14 +63,13 @@ static void *__routine(
         if (pool->stop && queue_empty(&pool->queue)) {
             return NULL;
         }
-        d = queue_front(&pool->queue);
-        handler = (void *)((long int)d >> 8);
+        task = queue_front(&pool->queue);
         queue_pop(&pool->queue);
         pool->pendings--;
         pthread_mutex_unlock(&pool->mutex);
         pool->runnings++;
-        // NOTE: Should call handler... with ctx
-        handler(pool->ctx, (void *)((long int)d & 0xff));
+        // NOTE: Should call task... with ctx
+        task->handler(pool->ctx, task->data);
         pool->runnings--;
     }
 }
