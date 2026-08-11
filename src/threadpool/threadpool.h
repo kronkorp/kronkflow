@@ -10,8 +10,10 @@
     #include <pthread.h>
     #include <stddef.h>
     #include <stdbool.h>
-#include "kronkflow/macros/types.h"
+    #include "kronkflow/macros/types.h"
     #include "queue/queue.h"
+
+typedef void *(*kfThreadPoolHandler)(void *);
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -37,8 +39,8 @@ typedef struct kronkflow_threadpool_s {
 
 typedef struct kronkflow_thread_task_s {
 
-    kfHandler handler;
-    void *data;
+    kfThreadPoolHandler handler;
+    void*               data;
 
 } kfThreadTask;
 
@@ -50,6 +52,6 @@ void kfThreadPool_clear(kfThreadPool *pool);
 void kfThreadPool_stop(kfThreadPool *pool);
 size_t kfThreadPool_running(const kfThreadPool *pool);
 size_t kfThreadPool_remaining(const kfThreadPool *pool);
-int kfThreadPool_pushTask(kfThreadPool *pool, kfHandler task, void *data);
+int kfThreadPool_pushTask(kfThreadPool *pool, kfThreadPoolHandler task, void *data);
 
 #endif /* KRONKFLOW_THREADPOOL_PRIVATE_H */

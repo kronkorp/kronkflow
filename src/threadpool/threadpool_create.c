@@ -69,7 +69,7 @@ static void *__routine(
         pthread_mutex_unlock(&pool->mutex);
         pool->runnings++;
         // NOTE: Should call task... with ctx
-        task->handler(pool->ctx, task->data);
+        task->handler(task->data);
         pool->runnings--;
     }
 }
@@ -89,6 +89,7 @@ int kfThreadPool_init(
     if (pthread_cond_init(&pool->cond, NULL) != 0) {
         return -1;
     }
+    queue_init(&pool->queue);
     pool->pendings = 0;
     pool->runnings = 0;
     pool->ctx = ctx;
@@ -101,6 +102,5 @@ int kfThreadPool_init(
     for (size_t i = 0; i < nthreads; ++i) {
         pthread_create(&pool->threads[i], NULL, &__routine, pool);
     }
-    queue_init(&pool->queue);
     return 0;
 }

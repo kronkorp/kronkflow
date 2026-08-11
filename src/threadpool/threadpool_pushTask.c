@@ -11,7 +11,7 @@
 
 int kfThreadPool_pushTask(
     kfThreadPool *pool,
-    kfHandler task,
+    void *(*task)(void *),
     void *data
 )
 {

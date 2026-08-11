@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 project(kronkflow LANGUAGES C)
 
+include(cmake/ProjectOptions.cmake)
+include(cmake/CompilerOptions.cmake)
+include(cmake/Utils.cmake)
+
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     message(FATAL_ERROR "Les builds dans le dossier source sont interdits. Créez un dossier de build (ex: 'build/').")
 endif()
