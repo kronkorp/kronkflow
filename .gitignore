@@ -19,6 +19,7 @@ libargot.so
 
 # Build
 Release/
+build/
 Debug/
 
 # Test
