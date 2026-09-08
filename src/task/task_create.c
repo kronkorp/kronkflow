@@ -10,12 +10,12 @@
 #include "task.h"
 
 // DEBUG: Make sure opt is not NULL
-PR_API
+KF_API
 inline
 kfTask kfTask_create(
     kfTaskOpt *opt,
-    prTick delay,
-    prTick interval
+    kfTick delay,
+    kfTick interval
 )
 {
     return (kfTask){

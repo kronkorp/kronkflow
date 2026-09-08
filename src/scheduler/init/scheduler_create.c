@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-PR_API
+KF_API
 kfScheduler *kfScheduler_create(
     size_t size
 )

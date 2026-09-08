@@ -28,12 +28,12 @@ static int __kfScheduler_ensureCapacity(
     return 0;
 }
 
-PR_API
+KF_API
 size_t kfScheduler_addTask(
     kfScheduler *sch,
     kfTaskOpt taskOptions,
-    prTick target,
-    prTick interval
+    kfTick target,
+    kfTick interval
 )
 {
     static size_t _id = 1;

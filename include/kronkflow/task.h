@@ -27,9 +27,9 @@ typedef struct prophecy_task_s kfTask;
 ///////////////////////////////////////////////////////////////////////////////
 typedef struct prophecy_task_opt_s {
 
-    prHandler handler;   //!< The task handler (function ptr)
+    kfHandler handler;   //!< The task handler (function ptr)
     void*     data;      //!< The data to give to the handler
-    prClearer clearer;   //!< The clearer of the data if allocated
+    kfClearer clearer;   //!< The clearer of the data if allocated
 
 } kfTaskOpt;
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,12 +39,12 @@ typedef struct prophecy_task_opt_s {
 /**
  * @brief  Create task opts
  *
- * @param handler  The function ptr handler prBool (*)(void *, void *)
+ * @param handler  The function ptr handler kfBool (*)(void *, void *)
  * @param data     The data to give to the handler
  * @param clearer  The clearer to clear data if allocated
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API kfTaskOpt kfTask_opt(prHandler handler, void *data, prClearer clearer);
+KF_API kfTaskOpt kfTask_opt(kfHandler handler, void *data, kfClearer clearer);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -58,7 +58,7 @@ PR_API kfTaskOpt kfTask_opt(prHandler handler, void *data, prClearer clearer);
  * @return          Returns the new task
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API kfTask kfTask_create(kfTaskOpt *data, prTick delay, prTick interval);
+KF_API kfTask kfTask_create(kfTaskOpt *data, kfTick delay, kfTick interval);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_TASKS_H */

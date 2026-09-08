@@ -70,8 +70,8 @@ int main(void)
 - `kfScheduler_tick(kfScheduler *sch, void *context)`: Advance the scheduler by one tick and execute ready tasks.
 
 ### Task Management
-- `kfTask_opt(prHandler handler, void *data, prClearer clearer)`: Build a task opt structure.
-- `kfScheduler_addTask(kfScheduler *sch, kfTask task, prTick delay, prTick interval)`: Register a task in the scheduler.
+- `kfTask_opt(kfHandler handler, void *data, kfClearer clearer)`: Build a task opt structure.
+- `kfScheduler_addTask(kfScheduler *sch, kfTask task, kfTick delay, kfTick interval)`: Register a task in the scheduler.
 
 ## License
 

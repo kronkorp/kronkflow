@@ -8,7 +8,7 @@
 #include "kronkflow/macros/optimization.h"
 #include <stdlib.h>
 
-PR_API
+KF_API
 void kfScheduler_destroy(
     kfScheduler *sch
 )

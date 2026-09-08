@@ -12,7 +12,7 @@
 #include "../minheap/minheap.h"
 #include "kronkflow/scheduler.h"
 
-PR_API
+KF_API
 size_t kfScheduler_tick(
     kfScheduler *sch,
     void *context

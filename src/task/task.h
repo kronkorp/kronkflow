@@ -22,11 +22,11 @@
 typedef struct prophecy_task_s {
 
     size_t     id;        //!< The id of the tasks
-    prHandler  handler;   //!< The handler (callback)
+    kfHandler  handler;   //!< The handler (callback)
     void*      data;      //!< The task data
-    prClearer  clearer;   //!< The data clearer
-    prTick     interval;  //!< The interval (0 if ponctual, > 0 else)
-    prTick     target;    //!< The tick remainings.
+    kfClearer  clearer;   //!< The data clearer
+    kfTick     interval;  //!< The interval (0 if ponctual, > 0 else)
+    kfTick     target;    //!< The tick remainings.
 
 } kfTask;
 ///////////////////////////////////////////////////////////////////////////////

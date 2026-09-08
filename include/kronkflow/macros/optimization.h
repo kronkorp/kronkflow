@@ -8,27 +8,27 @@
     #define PROPHECY_MACROS_OPTIMIZATION_H
 
     #if defined(__GNUC__) && (__GNUC__ >= 4) || defined(__has_attribute) && __has_attribute(visibility)
-        #define PR_API __attribute__((visibility("default")))
+        #define KF_API __attribute__((visibility("default")))
     #else
-        #define PR_API
+        #define KF_API
     #endif
 
     #if defined(__GNUC__) && (__GNUC__ >= 4) || defined(__has_attribute) && __has_attribute(unused)
-        #define PR_UNUSED __attribute__((unused))
+        #define KF_UNUSED __attribute__((unused))
     #else
-        #define PR_UNUSED
+        #define KF_UNUSED
     #endif
 
     #if defined(__GNUC__) && (__GNUC__ >= 4) || defined(__has_attribute) && __has_attribute(hot)
-        #define PR_HOT __attribute__((hot))
+        #define KF_HOT __attribute__((hot))
     #else
-        #define PR_HOT
+        #define KF_HOT
     #endif
 
     #if defined(__GNUC__) && (__GNUC__ >= 4) || defined(__has_attribute) && __has_attribute(cold)
-        #define PR_COLD __attribute__((cold))
+        #define KF_COLD __attribute__((cold))
     #else
-        #define PR_COLD
+        #define KF_COLD
     #endif
 
 #endif /* PROPHECY_MACROS_OPTIMIZATION_H */

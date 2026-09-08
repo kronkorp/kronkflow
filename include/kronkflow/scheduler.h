@@ -35,7 +35,7 @@ typedef struct prophecy_scheduler_s kfScheduler;
  * @return      Returns newly allocated kfScheduler, or NULL on error
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API kfScheduler *kfScheduler_create(size_t size);
+KF_API kfScheduler *kfScheduler_create(size_t size);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -46,7 +46,7 @@ PR_API kfScheduler *kfScheduler_create(size_t size);
  * @param sch  The scheduler to destroy
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API void kfScheduler_destroy(kfScheduler *sch);
+KF_API void kfScheduler_destroy(kfScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -61,7 +61,7 @@ PR_API void kfScheduler_destroy(kfScheduler *sch);
  * @return          The id of the task added (>1), 0 if failed
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API kfTaskID kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, prTick delay, prTick interval);
+KF_API kfTaskID kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, kfTick delay, kfTick interval);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -74,7 +74,7 @@ PR_API kfTaskID kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, prTick dela
  * @return         Returns the number of tasks executed this tick
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API size_t kfScheduler_tick(kfScheduler *sch, void *context);
+KF_API size_t kfScheduler_tick(kfScheduler *sch, void *context);
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -86,7 +86,7 @@ PR_API size_t kfScheduler_tick(kfScheduler *sch, void *context);
  * @return     The current tick
  */
 ///////////////////////////////////////////////////////////////////////////////
-PR_API prTick kfScheduler_currentTick(const kfScheduler *sch);
+KF_API kfTick kfScheduler_currentTick(const kfScheduler *sch);
 ///////////////////////////////////////////////////////////////////////////////
 
 #endif /* PROPHECY_SCHEDULER_H */
