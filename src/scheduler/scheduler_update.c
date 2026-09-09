@@ -25,7 +25,7 @@ size_t kfScheduler_tick(
     if (!sch) {
         return 0;
     }
-    sch->tick++;
+    ++sch->tick;
     while (sch->count > 0 && sch->tasks[0].target <= sch->tick) {
         ctask = sch->tasks[0];
         prMinHeap_remove(sch, 0);
@@ -33,7 +33,13 @@ size_t kfScheduler_tick(
         done++;
         if (r && ctask.interval > 0) {
             ctask.target = ctask.interval;
-            kfScheduler_addTask(sch, (kfTaskOpt){ctask.handler, ctask.data, ctask.clearer}, ctask.interval, ctask.interval);
+            kfScheduler_addTask(sch, (kfTaskOpt){
+                ctask.handler,
+                ctask.data,
+                ctask.clearer,
+                ctask.stage,
+                ctask.masks
+            }, ctask.interval, ctask.interval);
         } else if (ctask.clearer) {
             ctask.clearer(ctask.data);
         }

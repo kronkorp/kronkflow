@@ -9,6 +9,16 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     message(FATAL_ERROR "Les builds dans le dossier source sont interdits. Créez un dossier de build (ex: 'build/').")
 endif()
 
+include(FetchContent)
+
+FetchContent_Declare(
+    kronkutils_c
+    GIT_REPOSITORY https://github.com/kronkorp/kronkutils-C
+    GIT_TAG        main
+)
+
+FetchContent_MakeAvailable(kronkutils_c)
+
 file(GLOB_RECURSE kronkflow_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
 )

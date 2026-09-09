@@ -18,5 +18,6 @@
     typedef void (*kfClearer)(void *);
     typedef uint64_t kfTick;
     typedef size_t   kfTaskID;
+    typedef size_t   kfStageId;
 
 #endif /* PROPHECY_MACROS_TYPES_H */

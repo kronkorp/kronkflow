@@ -8,9 +8,8 @@
     #define PROPHECY_TASK_IMPL_H
     #include "kronkflow/macros/types.h"
     #include "kronkflow/task.h"
+    #include <stdint.h>
     #include <stddef.h>
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -27,6 +26,9 @@ typedef struct prophecy_task_s {
     kfClearer  clearer;   //!< The data clearer
     kfTick     interval;  //!< The interval (0 if ponctual, > 0 else)
     kfTick     target;    //!< The tick remainings.
+
+    kfStageId  stage;     //!< Stage id
+    kfRWMasks  masks;     //!< Masks
 
 } kfTask;
 ///////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,16 @@
 #ifndef PROPHECY_SCHEDULER_IMPL_H
     #define PROPHECY_SCHEDULER_IMPL_H
     #include "../task/task.h"
+    #include "kronkflow/task.h"
     #include <stddef.h>
+    #include ""
+
+typedef struct prophecy_stage_data_s {
+
+    kfTask* tasks;
+    bool passed;
+
+} kfStageData;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -22,6 +31,9 @@ typedef struct prophecy_scheduler_s {
     size_t   size;   //!< The size of tasks raw array
     size_t   count;  //!< The number of tasks pushed
     kfTick   tick;   //!< The current tick (please tick scheduler at each loop)
+
+    // TODO: Can move some tasks to arena. Maybe do it with a dynamic array ?
+    
 
 } kfScheduler;
 ///////////////////////////////////////////////////////////////////////////////
