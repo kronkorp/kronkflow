@@ -43,7 +43,7 @@ Test(scheduler, destroy_after_buckets_used)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
 
     AssertNotNull(sch, "create should succeed");
     opt.stage = 0;
@@ -63,7 +63,7 @@ Test(scheduler, tick_return_counts_executed)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
     size_t done;
 
     kfScheduler_addTask(sch, opt, 1, 0);
@@ -81,7 +81,7 @@ Test(scheduler, task_not_due_not_executed)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
     size_t i;
 
     kfScheduler_addTask(sch, opt, 5, 0);
@@ -98,7 +98,7 @@ Test(scheduler, interval_zero_runs_once)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
     size_t i;
 
     kfScheduler_addTask(sch, opt, 1, 0);
@@ -113,7 +113,7 @@ Test(scheduler, interval_task_reschedules)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
     size_t i;
 
     kfScheduler_addTask(sch, opt, 1, 3);
@@ -130,7 +130,7 @@ Test(scheduler, non_reschedule_calls_clearer)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, &counters, &count_clear);
+    kfTaskOpt opt = kfTask_opt(&count_call, &counters, &count_clear, 0, (kfRWMasks){ 0, 0 });
 
     kfScheduler_addTask(sch, opt, 1, 0);
     kfScheduler_tick(sch, &counters);
@@ -142,7 +142,7 @@ Test(scheduler, reschedule_skips_clearer)
 {
     kfScheduler *sch = kfScheduler_create(4);
     Counters counters = { 0, 0 };
-    kfTaskOpt opt = kfTask_opt(&count_call, &counters, &count_clear);
+    kfTaskOpt opt = kfTask_opt(&count_call, &counters, &count_clear, 0, (kfRWMasks){ 0, 0 });
 
     kfScheduler_addTask(sch, opt, 1, 2);
     kfScheduler_tick(sch, &counters);
@@ -152,7 +152,7 @@ Test(scheduler, reschedule_skips_clearer)
 
 Test(scheduler, addTask_null_sch_safe)
 {
-    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL);
+    kfTaskOpt opt = kfTask_opt(&count_call, NULL, NULL, 0, (kfRWMasks){ 0, 0 });
 
     AssertEq(kfScheduler_addTask(NULL, opt, 1, 0), (kfTaskID)0,
         "adding to a null scheduler should fail cleanly");

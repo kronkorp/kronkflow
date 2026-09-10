@@ -66,9 +66,11 @@ typedef struct prophecy_task_opt_s {
  * @param handler  The function ptr handler kfBool (*)(void *, void *)
  * @param data     The data to give to the handler
  * @param clearer  The clearer to clear data if allocated
+ * @param stageId  The stage id (priority) (< is better)
+ * @param rwmask   The read write mask for multithreading
  */
 ///////////////////////////////////////////////////////////////////////////////
-KF_API kfTaskOpt kfTask_opt(kfHandler handler, void *data, kfClearer clearer);
+KF_API kfTaskOpt kfTask_opt(kfHandler handler, void *data, kfClearer clearer, kfStageId stageId, kfRWMasks rwmask);
 ///////////////////////////////////////////////////////////////////////////////
 
 

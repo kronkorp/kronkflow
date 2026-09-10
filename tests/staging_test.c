@@ -34,10 +34,8 @@ static kfTaskOpt marked_task(
     long marker
 )
 {
-    kfTaskOpt opt = kfTask_opt(&record_stage, (void *)(intptr_t)marker, NULL);
-
-    opt.stage = stage;
-    return opt;
+    return kfTask_opt(&record_stage, (void *)(intptr_t)marker, NULL,
+        stage, (kfRWMasks){ 0, 0 });
 }
 
 Test(staging, sorted_by_stage_not_insertion)
