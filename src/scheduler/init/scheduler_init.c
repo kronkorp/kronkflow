@@ -4,9 +4,11 @@
 ** File description:
 ** Init the scheduler
 */
+#include "dynarray.h"
 #include "kronkflow/scheduler.h"
 #include "../../task/task.h"
 #include "../scheduler.h"
+#include "kronkflow/task.h"
 #include <stdlib.h>
 
 int kfScheduler_init(
@@ -24,5 +26,6 @@ int kfScheduler_init(
     sch->size = size;
     sch->count = 0;
     sch->tick = 0;
+    kuDynarray_init(&sch->staged, 2, kfTask *);
     return 0;
 }

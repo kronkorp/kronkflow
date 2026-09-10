@@ -25,5 +25,7 @@ kfTask kfTask_create(
         .clearer = opt->clearer,
         .target = delay,
         .interval = interval,
+        .stage = opt->stage,
+        .masks = opt->masks,
     };
 }
