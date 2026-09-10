@@ -30,14 +30,16 @@ sudo make install
 Here is a simple example of how to use Kronkflow:
 
 ```c
-#include <kronkflow.h>
+#include <kronkflow/scheduler.h>
+#include <kronkflow/task.h>
 #include <stdio.h>
 #include <unistd.h>
 
 // Your task handler
-static bool my_handler(void *context, void *data)
+static kfBool my_handler(void *context, void *data)
 {
     printf("Task executed with data: %ld\n", (long int)data);
+    return kfTrue;
 }
 
 int main(void)
@@ -45,11 +47,15 @@ int main(void)
     // Create a scheduler with a capacity of 512 tasks
     kfScheduler *sch = kfScheduler_create(512);
 
-    // Add a periodic task (runs in 2 ticks, then every 5 ticks)
-    kfScheduler_addTask(sch, kfTask_opt(&my_handler, (void *)1, NULL) 2, 5);
+    // Add a periodic task on stage 0 (runs in 2 ticks, then every 5 ticks)
+    kfScheduler_addTask(sch,
+        kfTask_opt(&my_handler, (void *)1, NULL, 0, (kfRWMasks){ 0, 0 }), 2, 5);
 
-    // Add a punctual task (runs once in 10 ticks)
-    kfScheduler_addTask(sch, kfTask_opt(&my_handler, (void *)3, NULL), 10, 0);
+    // Add a punctual task on stage 1 (runs once in 10 ticks).
+    // Each tick, tasks are sorted and executed stage by stage, so this
+    // always runs after every stage 0 task, no matter the insertion order.
+    kfScheduler_addTask(sch,
+        kfTask_opt(&my_handler, (void *)3, NULL, 1, (kfRWMasks){ 0, 0 }), 10, 0);
 
     // Main loop
     while (1) {
@@ -58,7 +64,7 @@ int main(void)
     }
 
     kfScheduler_destroy(sch);
-    return true;
+    return 0;
 }
 ```
 
@@ -67,11 +73,11 @@ int main(void)
 ### Scheduler Management
 - `kfScheduler_create(size_t size)`: Allocate and initialize a new scheduler.
 - `kfScheduler_destroy(kfScheduler *sch)`: Free the scheduler and its resources.
-- `kfScheduler_tick(kfScheduler *sch, void *context)`: Advance the scheduler by one tick and execute ready tasks.
+- `kfScheduler_tick(kfScheduler *sch, void *context)`: Advance the scheduler by one tick and execute ready tasks, stage by stage.
 
 ### Task Management
-- `kfTask_opt(kfHandler handler, void *data, kfClearer clearer)`: Build a task opt structure.
-- `kfScheduler_addTask(kfScheduler *sch, kfTask task, kfTick delay, kfTick interval)`: Register a task in the scheduler.
+- `kfTask_opt(kfHandler handler, void *data, kfClearer clearer, kfStageId stage, kfRWMasks masks)`: Build a task opt structure.
+- `kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, kfTick delay, kfTick interval)`: Register a task in the scheduler.
 
 ## License
 
