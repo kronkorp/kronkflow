@@ -26,7 +26,7 @@ void kfScheduler_clear(
     }
     if (sch->staged) {
         for (size_t i = 0; i < kuDynarray_getLoad(sch->staged); ++i) {
-            kuDynarray_free(kuDynarray_at(sch->staged, i));
+            kuDynarray_free(sch->staged[i]);
         }
         kuDynarray_free(sch->staged);
     }
