@@ -9,7 +9,7 @@
     #include "../task/task.h"
     #include "kronkflow/task.h"
     #include <stddef.h>
-    #include ""
+    #include <dynarray.h>
 
 typedef struct prophecy_stage_data_s {
 
@@ -33,7 +33,7 @@ typedef struct prophecy_scheduler_s {
     kfTick   tick;   //!< The current tick (please tick scheduler at each loop)
 
     // TODO: Can move some tasks to arena. Maybe do it with a dynamic array ?
-    
+    kfTask  **staged;  //!< Bucket (vector)
 
 } kfScheduler;
 ///////////////////////////////////////////////////////////////////////////////

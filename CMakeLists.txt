@@ -28,6 +28,8 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
 add_library(kronkflow-obj OBJECT ${kronkflow_SOURCES})
 
+target_link_libraries(kronkflow-obj PUBLIC kronkutils_static)
+
 target_include_directories(kronkflow-obj
     PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
