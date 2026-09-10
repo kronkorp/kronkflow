@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(kronkflow LANGUAGES C)
 
+option(BUILD_TESTS "Build the prophecy test suite (requires kronklab)" OFF)
+
 include(cmake/ProjectOptions.cmake)
 include(cmake/CompilerOptions.cmake)
 include(cmake/Utils.cmake)
@@ -8,6 +10,16 @@ include(cmake/Utils.cmake)
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     message(FATAL_ERROR "Les builds dans le dossier source sont interdits. Créez un dossier de build (ex: 'build/').")
 endif()
+
+include(FetchContent)
+
+FetchContent_Declare(
+    kronkutils_c
+    GIT_REPOSITORY https://github.com/kronkorp/kronkutils-C
+    GIT_TAG        main
+)
+
+FetchContent_MakeAvailable(kronkutils_c)
 
 file(GLOB_RECURSE kronkflow_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
@@ -17,6 +29,8 @@ set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
 add_library(kronkflow-obj OBJECT ${kronkflow_SOURCES})
+
+target_link_libraries(kronkflow-obj PUBLIC kronkutils_static)
 
 target_include_directories(kronkflow-obj
     PUBLIC
@@ -64,3 +78,17 @@ install(TARGETS kronkflow-static kronkflow-shared
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/kronkflow
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+
+# NOTE: Tests (opt-in, via -DBUILD_TESTS=ON)
+
+if(BUILD_TESTS)
+    FetchContent_Declare(
+        kronklab
+        GIT_REPOSITORY https://github.com/kronkorp/kronklab.git
+        GIT_TAG        5584149a3c9ccbb12baaf71cfd591db3b37541ad
+    )
+    FetchContent_MakeAvailable(kronklab)
+
+    enable_testing()
+    add_subdirectory(tests)
+endif()

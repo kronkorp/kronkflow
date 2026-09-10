@@ -5,6 +5,7 @@
 ** Clear a scheduler
 */
 #include "../scheduler.h"
+#include "dynarray.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -22,6 +23,12 @@ void kfScheduler_clear(
     }
     if (sch->tasks) {
         free(sch->tasks);
+    }
+    if (sch->staged) {
+        for (size_t i = 0; i < kuDynarray_getLoad(sch->staged); ++i) {
+            kuDynarray_free(sch->staged[i]);
+        }
+        kuDynarray_free(sch->staged);
     }
     sch->count = 0;
     sch->size = 0;

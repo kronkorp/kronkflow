@@ -13,12 +13,16 @@ inline
 kfTaskOpt kfTask_opt(
     kfHandler handler,
     void *data,
-    kfClearer clearer
+    kfClearer clearer,
+    kfStageId stageId,
+    kfRWMasks rwmask
 )
 {
     return (kfTaskOpt){
         .handler = handler,
         .data = data,
-        .clearer = clearer
+        .clearer = clearer,
+        .stage = stageId,
+        .masks = rwmask
     };
 }
