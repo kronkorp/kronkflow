@@ -57,29 +57,36 @@ size_t kfScheduler_tick(
     while (sch->count > 0 && sch->tasks[0].target <= sch->tick) {
         ctask = sch->tasks[0];
         prMinHeap_remove(sch, 0);
-
         push_to_buckets(sch, &ctask);
     }
-
+    
+    sch->ticking = true;
     for (size_t i = 0; i < kuDynarray_getLoad(sch->staged); ++i) {
         for (size_t j = 0; j < kuDynarray_getLoad(sch->staged[i]); ++j) {
+            sch->curStage = i;
+            sch->curIdx = j;
             ctask = sch->staged[i][j];
+            if (ctask.cancelled) {
+                if (ctask.clearer) {
+                    ctask.clearer(ctask.data);
+                }
+                continue;
+            }
             r = ctask.handler(context, ctask.data);
             ++done;
-            if (r && ctask.interval > 0) {
-                ctask.target = ctask.interval;
-                kfScheduler_addTask(sch, (kfTaskOpt){
-                    ctask.handler,
-                    ctask.data,
-                    ctask.clearer,
-                    ctask.stage,
-                    ctask.masks
-                }, ctask.interval, ctask.interval);
+            // NOTE: The handler may have removed its own task: re-read the flag
+            if (r && ctask.interval > 0 && !sch->staged[i][j].cancelled) {
+                // NOTE: Same task, same id: only its target moves
+                ctask.target = sch->tick + ctask.interval;
+                if (kfScheduler_insertTask(sch, &ctask) == -1 && ctask.clearer) {
+                    ctask.clearer(ctask.data);
+                }
             } else if (ctask.clearer) {
                 ctask.clearer(ctask.data);
             }
         }
         kuDynarray_clear(sch->staged[i]);
     }
+    sch->ticking = false;
     return done;
 }

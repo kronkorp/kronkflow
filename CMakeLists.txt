@@ -19,7 +19,19 @@ FetchContent_Declare(
     GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(kronkutils_c)
+FetchContent_Declare(
+    kronkpool
+    GIT_REPOSITORY https://github.com/kronkorp/kronkpool
+    GIT_TAG        main
+    # kronkpool's cmake/CompilerOptions.cmake unconditionally declares a
+    # "project_options" INTERFACE target, which collides with the one our
+    # own cmake/CompilerOptions.cmake already defines. Guard theirs so it
+    # reuses ours instead of re-declaring it.
+    PATCH_COMMAND bash -c "sed -i '1i if(NOT TARGET project_options)' cmake/CompilerOptions.cmake && echo 'endif()' >> cmake/CompilerOptions.cmake"
+    UPDATE_DISCONNECTED TRUE
+)
+
+FetchContent_MakeAvailable(kronkutils_c kronkpool)
 
 file(GLOB_RECURSE kronkflow_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
@@ -30,7 +42,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
 add_library(kronkflow-obj OBJECT ${kronkflow_SOURCES})
 
-target_link_libraries(kronkflow-obj PUBLIC kronkutils_static)
+target_link_libraries(kronkflow-obj PUBLIC kronkutils_static kronkpool)
 
 target_include_directories(kronkflow-obj
     PUBLIC

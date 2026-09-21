@@ -56,12 +56,34 @@ KF_API void kfScheduler_destroy(kfScheduler *sch);
  *
  * @param sch       The scheduler to add a task
  * @param opt       The task options (handler, data, clearer)
- * @param target    In how many ticks the task is gonna be executed
+ * @param delay     In how many ticks the task is gonna be executed
  * @param interval  If >0, the task will be reprogramming every <interval> ticks
- * @return          The id of the task added (>1), 0 if failed
+ * @return          The id of the task added (>= 1), 0 if failed
+ *
+ * @note   Ids are per scheduler, in registration order. A periodic task keeps
+ *         the same id every time it is reprogrammed. Tasks of a same stage due
+ *         on the same tick run in the order of their ids.
  */
 ///////////////////////////////////////////////////////////////////////////////
 KF_API kfTaskID kfScheduler_addTask(kfScheduler *sch, kfTaskOpt opt, kfTick delay, kfTick interval);
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Remove a task that has not run yet (or a periodic one) from the scheduler
+ *
+ * The clearer of the task is called, exactly once, like when a task ends by
+ * itself. It can be called from a handler, including by a task on its own id:
+ * it then finishes its current run and is not reprogrammed.
+ *
+ * @param sch  The scheduler
+ * @param id   The id given by kfScheduler_addTask
+ * @return     kfTrue if the task was found and removed, kfFalse otherwise
+ *             (unknown id, or one-shot task that already ran)
+ */
+///////////////////////////////////////////////////////////////////////////////
+KF_API kfBool kfScheduler_removeTask(kfScheduler *sch, kfTaskID id);
 ///////////////////////////////////////////////////////////////////////////////
 
 

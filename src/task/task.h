@@ -8,6 +8,7 @@
     #define PROPHECY_TASK_IMPL_H
     #include "kronkflow/macros/types.h"
     #include "kronkflow/task.h"
+    #include <stdbool.h>
     #include <stdint.h>
     #include <stddef.h>
 
@@ -29,6 +30,8 @@ typedef struct prophecy_task_s {
 
     kfStageId  stage;     //!< Stage id
     kfRWMasks  masks;     //!< Masks
+
+    bool       cancelled; //!< Removed while staged: skipped (and cleared) by the tick
 
 } kfTask;
 ///////////////////////////////////////////////////////////////////////////////

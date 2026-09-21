@@ -17,7 +17,7 @@ void prMinHeap_add(
     size_t idx
 )
 {
-    while (idx > 0 && sch->tasks[(idx - 1) >> 1].target > sch->tasks[idx].target) {
+    while (idx > 0 && prMinHeap_less(&sch->tasks[idx], &sch->tasks[(idx - 1) >> 1])) {
         prMinHeap_swap(&sch->tasks[idx],  &sch->tasks[(idx - 1) >> 1]);
         idx = (idx - 1) >> 1;
     }

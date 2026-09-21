@@ -26,6 +26,10 @@ int kfScheduler_init(
     sch->size = size;
     sch->count = 0;
     sch->tick = 0;
+    sch->nextId = 1;
+    sch->ticking = false;
+    sch->curStage = 0;
+    sch->curIdx = 0;
     kuDynarray_init(&sch->staged, 2, kfTask *);
     return 0;
 }

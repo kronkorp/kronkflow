@@ -35,7 +35,26 @@ typedef struct prophecy_scheduler_s {
     // TODO: Can move some tasks to arena. Maybe do it with a dynamic array ?
     kfTask  **staged;  //!< Bucket (vector)
 
+    kfTaskID nextId;   //!< Next task id (per scheduler, no shared state between schedulers)
+
+    bool     ticking;  //!< True while kfScheduler_tick runs the staged buckets
+    size_t   curStage; //!< Stage of the task being run (valid if ticking)
+    size_t   curIdx;   //!< Index in that stage's bucket (valid if ticking)
+
 } kfScheduler;
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  Insert an already built task in the heap, keeping its id and target
+ *
+ * @param sch   The scheduler
+ * @param task  The task (id and absolute target tick must be set)
+ * @return      0 on success, -1 if the heap could not grow
+ */
+///////////////////////////////////////////////////////////////////////////////
+int kfScheduler_insertTask(kfScheduler *sch, const kfTask *task);
 ///////////////////////////////////////////////////////////////////////////////
 
 

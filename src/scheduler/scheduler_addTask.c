@@ -28,28 +28,40 @@ static int __kfScheduler_ensureCapacity(
     return 0;
 }
 
+int kfScheduler_insertTask(
+    kfScheduler *sch,
+    const kfTask *task
+)
+{
+    if (sch->count >= sch->size) {
+        if (__kfScheduler_ensureCapacity(sch) == -1) {
+            return -1;
+        }
+    }
+    sch->tasks[sch->count] = *task;
+    prMinHeap_add(sch, sch->count);
+    ++sch->count;
+    return 0;
+}
+
 KF_API
 size_t kfScheduler_addTask(
     kfScheduler *sch,
     kfTaskOpt taskOptions,
-    kfTick target,
+    kfTick delay,
     kfTick interval
 )
 {
-    static size_t _id = 1;
+    kfTask task;
 
     if (!sch) {
         return 0;
     }
-    if (sch->count >= sch->size) {
-        if (__kfScheduler_ensureCapacity(sch) == -1) {
-            return 0;
-        }
+    task = kfTask_create(&taskOptions, delay, interval);
+    task.id = sch->nextId;
+    task.target = sch->tick + delay;
+    if (kfScheduler_insertTask(sch, &task) == -1) {
+        return 0;
     }
-    sch->tasks[sch->count] = kfTask_create(&taskOptions, target, interval); 
-    sch->tasks[sch->count].id = _id;
-    sch->tasks[sch->count].target = sch->tick + target;
-    prMinHeap_add(sch, sch->count);
-    ++sch->count;
-    return _id++;
+    return sch->nextId++;
 }
