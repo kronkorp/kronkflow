@@ -107,7 +107,8 @@ jobs:
         run: rm -rf build
 
   # NOTE: Both generators: Ninja refuses two rules that make the same file, which
-  #       Visual Studio's does not see
+  #       Visual Studio's does not see. (Visual Studio: CMake's default, the newest
+  #       one on the runner)
   windows_msvc:
     name: Windows build and smoke test (MSVC, ${{ matrix.generator }})
     needs: [detect_build_system]
@@ -116,12 +117,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        generator: [Visual Studio 17 2022, Ninja]
+        generator: [Visual Studio, Ninja]
     steps:
       - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Configure project with CMake
-        run: cmake -S . -B build -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+        run: cmake -S . -B build ${{ matrix.generator == 'Ninja' && '-G Ninja' || '' }} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
       - name: Build project with CMake
         timeout-minutes: 5
         run: cmake --build build --config Release --parallel
