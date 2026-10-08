@@ -19,7 +19,7 @@ include(FetchContent)
 FetchContent_Declare(
     kronkutils_c
     GIT_REPOSITORY https://github.com/kronkorp/kronkutils-C
-    GIT_TAG        30587669f40347e071fac6dd532e01e47d327a10
+    GIT_TAG        b1f8f9cc2293451506a27ac28c1a294a24fc05ca
 )
 
 FetchContent_Declare(
