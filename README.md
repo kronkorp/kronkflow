@@ -25,6 +25,23 @@ This will generate `libkronkflow.a` and `libkronkflow.so`. You can now install w
 sudo make install
 ```
 
+### On Windows
+
+kronkflow builds with MSVC and MinGW:
+
+```bash
+cmake -S . -B build
+cmake --build build --config Release
+```
+
+With MSVC, this gives `kronkflow_static.lib`, and `kronkflow.dll` with its import library `kronkflow.lib`.
+
+### Tests
+
+Configure with `-DBUILD_TESTS=ON`, then run `ctest --test-dir build`. A smoke test (`tests/smoke/`) runs on every
+platform. The other tests use [kronklab](https://github.com/kronkorp/kronklab), which runs each test in a `fork()`:
+they are not built on Windows.
+
 ## Quick Start
 
 Here is a simple example of how to use Kronkflow:

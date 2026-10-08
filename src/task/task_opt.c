@@ -9,7 +9,6 @@
 #include "kronkflow/task.h"
 
 KF_API
-inline
 kfTaskOpt kfTask_opt(
     kfHandler handler,
     void *data,

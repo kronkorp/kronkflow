@@ -37,7 +37,9 @@ static void push_to_buckets(
     if (sch->staged[stage] == NULL) {
         kuDynarray_init(&sch->staged[stage], 2, kfTask);
     }
-    kuDynarray_pushBack(sch->staged[stage], *task);
+    // NOTE: Not the kuDynarray_pushBack macro, a GNU statement expression that
+    //       MSVC does not have: the task is already in memory, its address does
+    __kuDynarray_pushBack((void **)&sch->staged[stage], task);
 }
 
 KF_API

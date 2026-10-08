@@ -13,25 +13,28 @@ endif()
 
 include(FetchContent)
 
+# NOTE: Pinned: kronkflow does not change when their main does. kronkpool
+#       guards its "project_options" target itself (ours has the same name), so
+#       it needs no patch anymore
 FetchContent_Declare(
     kronkutils_c
     GIT_REPOSITORY https://github.com/kronkorp/kronkutils-C
-    GIT_TAG        main
+    GIT_TAG        b1f8f9cc2293451506a27ac28c1a294a24fc05ca
 )
 
 FetchContent_Declare(
     kronkpool
     GIT_REPOSITORY https://github.com/kronkorp/kronkpool
-    GIT_TAG        main
-    # kronkpool's cmake/CompilerOptions.cmake unconditionally declares a
-    # "project_options" INTERFACE target, which collides with the one our
-    # own cmake/CompilerOptions.cmake already defines. Guard theirs so it
-    # reuses ours instead of re-declaring it.
-    PATCH_COMMAND bash -c "sed -i '1i if(NOT TARGET project_options)' cmake/CompilerOptions.cmake && echo 'endif()' >> cmake/CompilerOptions.cmake"
-    UPDATE_DISCONNECTED TRUE
+    GIT_TAG        387735e0fd831224f7730437ca858bb4f1f78220
 )
 
+# NOTE: Their own tests are not ours to build (and kronklab, which they use,
+#       does not build on Windows)
+set(BUILD_TESTING OFF)
+set(KRONKPOOL_BUILD_TESTS OFF)
 FetchContent_MakeAvailable(kronkutils_c kronkpool)
+unset(BUILD_TESTING)
+unset(KRONKPOOL_BUILD_TESTS)
 
 file(GLOB_RECURSE kronkflow_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
@@ -50,13 +53,19 @@ target_include_directories(kronkflow-obj
         $<INSTALL_INTERFACE:include>
 )
 
-target_compile_options(kronkflow-obj PRIVATE
-    -Wall
-    -Wextra
-    -O3
-)
+if(MSVC)
+    # NOTE: No /O2 here: CMake gives it in Release, and it cannot go with the /RTC1 of Debug
+    target_compile_options(kronkflow-obj PRIVATE /W4)
+else()
+    target_compile_options(kronkflow-obj PRIVATE
+        -Wall
+        -Wextra
+        -O3
+    )
+endif()
 
 set_target_properties(kronkflow-obj PROPERTIES
+    C_STANDARD 11
     POSITION_INDEPENDENT_CODE ON
 )
 
@@ -68,6 +77,12 @@ target_link_libraries(kronkflow-shared PUBLIC kronkflow-obj)
 
 target_compile_definitions(kronkflow-shared PRIVATE kronkflow_BUILD_DLL)
 
+# NOTE: On Windows, a DLL only gives what it exports: the API is not marked for
+#       it (the objects are the same as the static library's), so it exports all
+set_target_properties(kronkflow-shared PROPERTIES
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
 add_library(kronkflow ALIAS kronkflow-static)
 
 set_target_properties(kronkflow-static PROPERTIES
@@ -78,6 +93,11 @@ set_target_properties(kronkflow-shared PROPERTIES
     OUTPUT_NAME kronkflow
 )
 
+if(MSVC)
+    # NOTE: The import library of the DLL is already kronkflow.lib
+    set_target_properties(kronkflow-static PROPERTIES OUTPUT_NAME kronkflow_static)
+endif()
+
 # NOTE: Installation
 
 include(GNUInstallDirs)
@@ -85,6 +105,7 @@ include(GNUInstallDirs)
 install(TARGETS kronkflow-static kronkflow-shared
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/kronkflow
@@ -94,13 +115,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/kronkflow
 # NOTE: Tests (opt-in, via -DBUILD_TESTS=ON)
 
 if(BUILD_TESTS)
-    FetchContent_Declare(
-        kronklab
-        GIT_REPOSITORY https://github.com/kronkorp/kronklab.git
-        GIT_TAG        5584149a3c9ccbb12baaf71cfd591db3b37541ad
-    )
-    FetchContent_MakeAvailable(kronklab)
-
     enable_testing()
     add_subdirectory(tests)
 endif()
