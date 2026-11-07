@@ -31,9 +31,9 @@
     <a href="https://github.com/kronkorp/kronkflow#usage"><strong>Explore the usage »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/GauthierMalfilatre/kronkflow/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/kronkorp/kronkflow/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/GauthierMalfilatre/kronkflow/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/kronkorp/kronkflow/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -210,8 +210,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/GauthierMalfilatre/kronkflow/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=GauthierMalfilatre/kronkflow" alt="contrib.rocks image" />
+<a href="https://github.com/kronkorp/kronkflow/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=kronkorp/kronkflow" alt="contrib.rocks image" />
 </a>
 
 
@@ -236,16 +236,16 @@ Project Link: [https://github.com/kronkorp/kronkflow](https://github.com/kronkor
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/GauthierMalfilatre/kronkflow.svg?style=for-the-badge
-[contributors-url]: https://github.com/GauthierMalfilatre/kronkflow/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/GauthierMalfilatre/kronkflow.svg?style=for-the-badge
-[forks-url]: https://github.com/GauthierMalfilatre/kronkflow/network/members
-[stars-shield]: https://img.shields.io/github/stars/GauthierMalfilatre/kronkflow.svg?style=for-the-badge
-[stars-url]: https://github.com/GauthierMalfilatre/kronkflow/stargazers
-[issues-shield]: https://img.shields.io/github/issues/GauthierMalfilatre/kronkflow.svg?style=for-the-badge
-[issues-url]: https://github.com/GauthierMalfilatre/kronkflow/issues
-[license-shield]: https://img.shields.io/github/license/GauthierMalfilatre/kronkflow.svg?style=for-the-badge
-[license-url]: https://github.com/GauthierMalfilatre/kronkflow/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/kronkorp/kronkflow.svg?style=for-the-badge
+[contributors-url]: https://github.com/kronkorp/kronkflow/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/kronkorp/kronkflow.svg?style=for-the-badge
+[forks-url]: https://github.com/kronkorp/kronkflow/network/members
+[stars-shield]: https://img.shields.io/github/stars/kronkorp/kronkflow.svg?style=for-the-badge
+[stars-url]: https://github.com/kronkorp/kronkflow/stargazers
+[issues-shield]: https://img.shields.io/github/issues/kronkorp/kronkflow.svg?style=for-the-badge
+[issues-url]: https://github.com/kronkorp/kronkflow/issues
+[license-shield]: https://img.shields.io/github/license/kronkorp/kronkflow.svg?style=for-the-badge
+[license-url]: https://github.com/kronkorp/kronkflow/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/gauthier-malfilatre-648001339/
 [C_]: https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white
