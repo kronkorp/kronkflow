@@ -100,8 +100,50 @@ jobs:
       - name: Check compilation
         timeout-minutes: 2
         run: |
-          cmake -S . -B build
+          cmake -S . -B build -DBUILD_TESTS=ON
           cmake --build build --parallel
           ctest --test-dir build --output-on-failure
       - name: Cleaning
         run: rm -rf build
+
+  # NOTE: Both generators: Ninja refuses two rules that make the same file, which
+  #       Visual Studio's does not see. (Visual Studio: CMake's default, the newest
+  #       one on the runner)
+  windows_msvc:
+    name: Windows build and smoke test (MSVC, ${{ matrix.generator }})
+    needs: [detect_build_system]
+    runs-on: windows-latest
+    if: ${{ needs.detect_build_system.outputs.has_cmake == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        generator: [Visual Studio, Ninja]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Configure project with CMake
+        run: cmake -S . -B build ${{ matrix.generator == 'Ninja' && '-G Ninja' || '' }} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+      - name: Build project with CMake
+        timeout-minutes: 5
+        run: cmake --build build --config Release --parallel
+      - name: Run tests
+        timeout-minutes: 3
+        run: ctest --test-dir build -C Release --output-on-failure
+
+  windows_mingw:
+    name: Windows build (MinGW, cross-compiled)
+    needs: [detect_build_system]
+    runs-on: ubuntu-latest
+    if: ${{ needs.detect_build_system.outputs.has_cmake == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MinGW-w64
+        run: sudo apt-get update && sudo apt-get install -y mingw-w64
+      - name: Configure project with CMake
+        run: |
+          cmake -S . -B build -DBUILD_TESTS=ON \
+            -DCMAKE_SYSTEM_NAME=Windows \
+            -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc
+      - name: Build project with CMake
+        timeout-minutes: 5
+        run: cmake --build build --parallel

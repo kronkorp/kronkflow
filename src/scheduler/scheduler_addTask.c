@@ -8,6 +8,7 @@
 #include "kronkflow/macros/types.h"
 #include "scheduler.h"
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include "../minheap/minheap.h"
 #include "kronkflow/task.h"
@@ -19,7 +20,12 @@ static int __kfScheduler_ensureCapacity(
     kfTask *old = sch->tasks;
     size_t newSize = (sch->size == 0) ? 16 : sch->size * 2;
 
-    sch->tasks = reallocarray(sch->tasks, newSize, sizeof(kfTask));
+    // NOTE: Not reallocarray, which neither the C standard nor Windows have:
+    //       its overflow check is done here
+    if (newSize > SIZE_MAX / sizeof(kfTask)) {
+        return -1;
+    }
+    sch->tasks = realloc(sch->tasks, newSize * sizeof(kfTask));
     if (!sch->tasks) {
         sch->tasks = old;
         return -1;

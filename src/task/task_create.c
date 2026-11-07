@@ -11,7 +11,6 @@
 
 // DEBUG: Make sure opt is not NULL
 KF_API
-inline
 kfTask kfTask_create(
     kfTaskOpt *opt,
     kfTick delay,
